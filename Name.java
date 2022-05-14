@@ -1,27 +1,23 @@
-package com.company;
+import module.DiscountModule;
+import utilities.FileWorker;
+import utilities.ModuleHelper;
 
-import java.util.Objects;
+public class Driver {
 
-public class Name {
-
-    private final String Name;
-
-    public Name(String Name) {
-        this.Name = Name; }
-    @Override
-    public int hashCode() {
-        return Objects.hash(Name);
+    public static void main(String[] args) {
+        try {
+            //Parse Transactions and Providers file to corresponding String lists (line by line)
+            FileWorker fileWorker = new FileWorker();
+            //Check those lists for data validity and restructurise to corresponding class Object lists
+            ModuleHelper moduleHelper = new ModuleHelper(fileWorker.getInputTransactions(), fileWorker.getInputProviders());
+            //Apply discount rules one by one and get final Transactions list (with applied discounts and final prices)
+            new DiscountModule(moduleHelper);
+            //Form an output file
+            fileWorker.writeFile(moduleHelper.getTransactions(), moduleHelper.getIgnoredTransactions());
+        } catch (Exception e) {
+            System.err.println("Error!");
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == this) {
-            return true;
-        }
-        if (!(o instanceof Name)) {
-            return false;
-        }
-        Name other = (Name) o;
-        return Objects.equals(Name, other.Name);
-    }
 }
