@@ -2,7 +2,7 @@ import module.DiscountModule;
 import utilities.FileWorker;
 import utilities.ModuleHelper;
 
-public class Driver {
+public class Name {
 
     public static void main(String[] args) {
         try {
